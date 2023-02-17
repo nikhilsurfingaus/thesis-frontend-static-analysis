@@ -1,14 +1,76 @@
-# Thesis Project PySolSweep <img src="https://github.com/nikhilsurfingaus/ThesisProject/blob/master/Resources/img.ico" width="70" height="70">
+# Thesis Project PySolSweep (2022) <img src="https://github.com/nikhilsurfingaus/ThesisProject/blob/master/Resources/img.ico" width="70" height="70">
 ## Static Analysis Tool For Solidity Smart Contracts
 ## Intro
-TODO
-## Dependicies
-TODO
+PySolSweep is a Static Program Analysis tool, which evaluates the securiity safety of a Solidity based Smart Contract. This tool offers coverage accross
+three classes of attacks from Overflow/Underflow, Syntax and DAO. A total of 35 major bugs and their variants are detcted by the Python based
+Static Analysis tool. This benefits of PySolSweep is its ability to overcome existing Solidity Static Analysis tools limitations and gaps of a 
+systematic approach of Bug Attack Theme coverage of bugs rather than a randmom assortment, suggested solution to overcome bug, vulnrability or
+countermeasure. As well as new bugs, vulnerbilities and countermeasures discovered from credited Academic Papers reviewed 2020-2022. The tool will
+not only provide a log report of the Static Analysis results but also give a contract rating score.
+## Dependencies
+### Install Python
+Python 3 can be installed using pip:
+
+    python3 -m pip install -U mypy
+- Debian/Ubuntu
+    1. Install using [apt-get](https://linux.die.net/man/8/apt-get).
+        ```sh
+        $ sudo apt-get update
+        $ sudo apt-get install python3
+        ```
+    1. Recommended - install development extensions (C headers necessary for some packages), `pip` (for installing packages globally), and `venv` (for creating a virtual environment).
+        ```sh
+        $ sudo apt-get install python3-dev python3-pip python3-venv
+        ```
+- macOS
+    1. Install [Brew](https://brew.sh). 
+    1. Install Python using Brew:
+        ```sh
+        $ brew install python3
+        ```
+    1. Make your the Brew executables `bin` directory is in your `PATH` variable.
+- Windows
+    1. Download Python from the [Windows Download](https://www.python.org/downloads/windows/) page.
+    2. Run the installer.
+        - Be sure to _check_ the box on to have Python added to your `PATH` if the installer offers such an option (it's normally off by default).
+### Python Libraries if not already installed with your current Python Version (Python Inc All These Libraries)
+#### Installing Numpy
+```sh
+$ pip install numpy
+```
+or
+```sh
+$ conda install numpy
+```
+#### Installing Tkinter
+```sh
+$ pip install tk
+```
+or
+```sh
+$ conda install tk
+```
+#### Installing Time
+```sh
+$ pip install python-time
+```
+or
+```sh
+$ conda install python-time
+```
+
 ## Usage
-### Standard Contract
-TODO
-### Withdraw Function
-TODO
+### General Contract Instructions
+The first static analysis mode is general scan, which covers all three Bug Attack Theme (BAT) classes of Overflow/Underflow, Syntax and DAO. The use-case involves a smart contract being placed within the ‘Verify’ subfolder. The file location would then be input as ‘Verify/filename.txt’, with the solidity code transformed into a Python readable text format. The ‘Start Scan Analysis' UI button would be selected and static analysis of the smart contract would be executed. Once completed, the results were displayed both in the terminal as well as an output text file namly ‘bugreport.txt’. 
+
+<img src="https://github.com/nikhilsurfingaus/ThesisProject/blob/master/Resources/General.jpg" alt="General" width="600" height="400"/> 
+
+### Withdraw Function Contract Instructions
+The second static analysis mode produced was that of a DAO withdraw/transfer function scan, which covered DAO bugs and vulnerabilities specific to a smart contracts withdraw/transfer function. The use-case follows similar to the general scan with the smart contract again placed within the ‘Verify’ subfolder in a .txt
+file. Then fill out details of the withdraw/transfer function including the function name, amount variable name and balance variable name. Once completed, the results were displayed both in the terminal as well as an output text file namly ‘bugreport.txt’. 
+
+<img src="https://github.com/nikhilsurfingaus/ThesisProject/blob/master/Resources/Withdraw.jpg" alt="Withdraw" width="600" height="400"/> 
+
 ## Bugs Detected
 ### Overflow/Underflow Vulnerabiltiies
 Num | Detector | Detection Details | Solutuion | Risk | Confidence
@@ -58,6 +120,106 @@ Num | Detector | Detection Details | Solutuion | Risk | Confidence
 5 | `Check Effect Interacts Pattern` | This check checks wether a contract with the withdraw function conducts the Checks-effects-interactions pattern when withdrawing funds from the balance. This pattern can ensure that all prerequiestes  before executing a the entire withdrawal. This pattern will prevent reclusive calls by managing the reentracy state. | Incoporate the Check-Effect-Interacts pattern, ensure that order is correct. Inlcuding all three components will act as a reentracy gaurd. However if out of order, contract withdraw function could still be vulnerable to DAO reentracy attack.  | High | Medium
 
 ## Contributions
-TODO
+The significance and contributions of this project on the static analysis of solidity smart contracts was immense. The first major contribution was that of the Control Flow Diagrams (CFD’s) constructed. These CFD’s extended the logic of 11 existing parse tree infrastures, as well as proposed 23 new CFD logic for parse tree infrastures. The evaluation and testing of this CFD logic through a group consensus with multiple other static tools. Validated the credibility of its violation path logic for usage as parse trees in bug and vulnerability detection.  Other significant contributions include that of the proposed approach of bug, vulnerability and countermeasures detected being based on Bug Attack Theme (BAT) coverage. The project demonstrated this approach towards program analysis of determining which bugs and vulnerabilities induce which attack theme, then detect all bugs, vulnerabilities and countermeasures within that attack theme. The experiment evaluation conducted supported this notion, as well as unearthing multiple general insights of existing Solidity Static Analysis tools and Ethereum blockchain deployed smart contractors.  Contributions from the evaluation included the lack of coverage existing static analysis tools provide against core attacks such as Overflow/Underflow, Syntax and DAO. Illustrating the impact of new bugs and vulnerabilities discovered in academic papers, and the lack of detection in tools which were released prior to these new bugs and vulnerabilities. The evaluation moreover illuminated a worrying insight into the large volume of medium to high risk impact bugs and vulnerabilities present in Ethereum blockchain deployed smart contracts. Thus, the significance and contributions of this project furthered the knowledge and research in the field of static analysis on Solidity Smart Contracts.
+
 ## References
-TODO
+"Program Analysis - Wikipedia", En.wikipedia.org, 2021. [Online]. Available: 
+https://en.wikipedia.org/wiki/Program_Analysis. [Accessed: 19- Aug- 2021].
+
+R. Bellairs, "What Is Static Analysis? Static Code Analysis Overview | Perforce Software", 
+Perforce Software, 2021. [Online]. Available: https://www.perforce.com/blog/sca/what-Static￾Analysis. [Accessed: 19- Aug- 2021].
+
+"Security Tools - Ethereum Smart Contract Best Practices", Consensys.github.io, 2021. 
+[Online]. Available: https://consensys.github.io/Smart-Contract-best-practices/security_tools/. 
+[Accessed: 19- Aug- 2021].
+
+"Security testing - Wikipedia", En.wikipedia.org, 2021. [Online]. Available: 
+https://en.wikipedia.org/wiki/Security_testing. [Accessed: 19- Aug- 2021].
+
+"What Is Ethereum?", Investopedia, 2021. [Online]. Available: 
+https://www.investopedia.com/terms/e/ethereum.asp. [Accessed: 19- Aug- 2021].
+
+G. McCubbin, "The Ultimate Ethereum Dapp Tutorial (How to Build a Full Stack 
+Decentralized Application Step-By-Step) | Dapp University", Dapp University, 2021. [Online]. 
+Available: https://www.dappuniversity.com/articles/the-ultimate-ethereum-dapp-tutorial. 
+[Accessed: 19- Aug- 2021].
+
+L. Mearian, "What's a Smart Contract (and how does it work)?", Computerworld, 2021. 
+[Online]. Available: https://www.computerworld.com/article/3412140/whats-a-Smart-Contract￾and-how-does-it-work.html. [Accessed: 19- Aug- 2021].
+
+"Ethereum price today, ETH live marketcap, chart, and info | CoinMarketCap", 
+CoinMarketCap, 2021. [Online]. Available: https://coinmarketcap.com/currencies/ethereum/. 
+[Accessed: 19- Aug- 2021].
+
+"Smart Contract Security: What Are the Weak Spots of Ethereum, EOS, and NEO 
+Networks?", TechNative, 2021. [Online]. Available: https://technative.io/Smart-Contract￾security-what-are-the-weak-spots-of-ethereum-eos-and-neo-networks/. [Accessed: 19- Aug-2021].
+
+"The Landscape of Solidity Smart Contract Security Tools in 2020", Kleros, 2021. [Online]. 
+Available: https://blog.kleros.io/the-landscape-of-Solidity-Smart-Contract-security-tools-in-
+2020/. [Accessed: 19- Aug- 2021].
+
+
+E. Attacks.md, "Ethereum Attacks.md", Gist, 2021. [Online]. Available: 
+https://gist.github.com/ethanbennett/7396bf3f61dd985d3426f2ee184d8822. [Accessed: 19- Aug-
+2021].
+
+A. John and T. Westbrook, "Crypto platform Poly Network rewards hacker with $500,000 
+'bug bounty'", Reuters, 2021. [Online]. Available: https://www.reuters.com/technology/crypto￾platform-poly-network-rewards-hacker-with-500000-bug-bounty-2021-08-13/. [Accessed: 19-Aug- 2021].
+
+"Static Analysis of Integer Overflow of Smart Contracts in Ethereum | Proceedings of the 
+2020 4th International Conference on Cryptography, Security and Privacy", Dl.acm.org, 2021. 
+[Online]. Available: https://dl.acm.org/doi/abs/10.1145/3377644.3377650. [Accessed: 19- Aug-2021].
+
+"SmartCheck: Static Analysis of Ethereum Smart Contracts", Ieeexplore.ieee.org, 2021. 
+[Online]. Available: https://ieeexplore.ieee.org/document/8445052. [Accessed: 19- Aug- 2021].
+
+P. Praitheeshan, L. Pan, J. Yu, J. Liu and R. Doss, "Security Analysis Methods on Ethereum 
+Smart Contract Vulnerabilities: A Survey", arXiv.org, 2021. [Online]. Available: 
+https://arxiv.org/abs/1908.08605. [Accessed: 19- Aug- 2021].
+
+"ÆGIS: Shielding Vulnerable Smart Contracts Against Attacks | Proceedings of the 15th 
+ACM Asia Conference on Computer and Communications Security", Dl.acm.org, 2021. 
+[Online]. Available: https://dl.acm.org/doi/abs/10.1145/3320269.3384756. [Accessed: 19- Aug-2021].
+
+"How effective are Smart Contract Analysis tools? evaluating Smart Contract Static Analysis
+tools using bug injection | Proceedings of the 29th ACM SIGSOFT International Symposium on 
+Software Testing and Analysis", Dl.acm.org, 2021. [Online]. Available: 
+https://dl.acm.org/doi/10.1145/3395363.3397385. [Accessed: 19- Aug- 2021].
+
+"Smart Contract: Attacks and Protections", Ieeexplore.ieee.org, 2021. [Online]. Available: 
+https://ieeexplore.ieee.org/document/8976179. [Accessed: 19- Aug- 2021].
+
+H. Preston, "Integer overflow and underflow vulnerabilities - Infosec Resources", Infosec 
+Resources, 2020. [Online]. Available: https://resources.infosecinstitute.com/topic/integer￾overflow-and-underflow-vulnerabilities/. [Accessed: 01- Jun- 2022].
+
+D. Siegel, "Ethereum Understanding The DAO Attack", CoinDesk, 2022. [Online]. 
+Available: https://www.coindesk.com/learn/2016/06/25/understanding-the-dao-attack/. 
+[Accessed: 01- Jun- 2022].
+
+J. Wu, "Ethereum’s History: From Zero to 2.0", WisdomTree, 2021. [Online]. Available: 
+https://www.wisdomtree.com/blog/2021-07-15/ethereums-history-from-zero-to-20. [Accessed: 
+01- Jun- 2022].
+
+M. Staderini, A. Pataricza and A. Bondavalli, "Security Evaluation and Improvement of 
+Solidity Smart Contracts", SSRN, 2022. [Online]. Available: 
+https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4038087. [Accessed: 01- Jun- 2022].
+
+"Solidity Scan", Docs.Solidityscan.com, 2022. [Online]. Available: 
+https://docs.Solidityscan.com/. [Accessed: 01- Jun- 2022].
+
+"GitHub - Smartdec/Smartcheck: SmartCheck – a Static Analysis tool that detects 
+vulnerabilities and bugs in Solidity programs (Ethereum-based Smart Contracts).", GitHub, 
+2019. [Online]. Available: https://github.com/Smartdec/Smartcheck. [Accessed: 01- Jun- 2022].
+2020. 
+"ContractGuard - Testing Platform for Smart Contracts", Contract.guardstrike.com, 2019. 
+[Online]. Available: https://Contract.guardstrike.com/. [Accessed: 11- Jun- 2022].
+
+"Security Considerations — Solidity 0.6.11 documentation", Docs.Soliditylang.org, 2020. 
+[Online]. Available: https://docs.Soliditylang.org/en/v0.6.11/security-considerations.html. 
+[Accessed: 05- Jun- 2022].
+
+"GitHub - SilentCicero/solint: A linting utility for Ethereum Solidity Smart￾Contracts", GitHub, 2019. [Online]. Available: https://github.com/SilentCicero/solint. 
+[Accessed: 06- Jun- 2022].
+
+"remix-project/libs/remix-analyzer at master · ethereum/remix-project", GitHub, 2020. 
+[Online]. Available: https://github.com/ethereum/remix-project/tree/master/libs/remix￾analyzer#readme. [Accessed: 08- Jun- 2022].
