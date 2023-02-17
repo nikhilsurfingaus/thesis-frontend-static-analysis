@@ -2,7 +2,7 @@
 # Main Thesis Project Repo
 ## [ThesisProject-Static-Analysis-Solidity-Smart-Contracts](https://github.com/nikhilsurfingaus/ThesisProject-Static-Analysis-Solidity-Smart-Contracts)
 # Frontend Display Demo
-# Demo: [https://pysolsweep.io](https://pysolsweep.netlify.app/)
+# Website: [https://pysolsweep.io](https://pysolsweep.netlify.app/)
 ## Screenshots
 <p float="left">
   <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/1.jpg" height=300 width="500" />
