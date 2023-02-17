@@ -4,6 +4,16 @@
 # Frontend Display Demo
 ## Demo: [https://pysolsweep.io](https://pysolsweep.netlify.app/)
 ## Screenshots
+<p float="left">
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/1.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/2.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/3.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/4.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/5.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/6.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/mobile.jpg" height=600 width="380" />
+</p>
+
 ## Website Powered By
 # Static Analysis Tool For Solidity Smart Contracts
 ## Intro
