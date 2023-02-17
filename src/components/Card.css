@@ -1,0 +1,64 @@
+.prof {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.githCard {
+    box-shadow: 0 0 6px 5px #A020F0, 0 0 5px 5px #A020F0, 0 0 4px 8px #A020F0;
+}
+
+.unCard {
+    margin-top: 10px;
+}
+
+.downPKG {
+    margin-top: 30px;
+}
+
+.update {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.live {
+    font-size: 1.3rem;
+    padding-right: 4px;
+    align-items: center;
+    justify-content: center;
+    color: #A020F0;
+    animation: blinker 2.5s linear infinite;
+}
+
+@keyframes blinker {
+    50% {
+        opacity: 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .prof {
+        justify-content: flex-start;
+    }
+    .unCard {
+        margin-top: 10px;
+    }
+}
+
+@media only screen and (min-width: 1650px) {
+    .GButton {
+        margin-left: 64px !important;
+    }
+    .update {
+        margin-left: -13px;
+    }
+}
