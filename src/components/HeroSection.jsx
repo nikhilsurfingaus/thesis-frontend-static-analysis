@@ -13,7 +13,7 @@ const HeroSection = () => {
 
       <div className='content max-w-[800px] mt-[-70px] w-full h-screen mx-auto text-center flex flex-col justify-center'>
         <p className='text-[#A020F0] font-bold p-2 md:text-3xl sm:text-1xl'>
-          "Blockchain Guardian Angel"
+          "Sweep Up Security Flaws"
         </p>
         <h1 className='md:text-7xl sm:text-6xl text-4xl font-bold md:py-6'>
          SECURE YOUR SMART CONTRACT
@@ -38,7 +38,8 @@ const HeroSection = () => {
           offset={-70}
           duration={500}
         >
-        <button className='bg-[#A020F0] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black hover:bg-white hover:text-black hover:border-white border-2 border-[#A020F0] transition-colors duration-300'>Get Started</button>
+        <button className='bg-[#A020F0] w-[200px] rounded-md font-medium my-6 mx-auto py-3 text-black hover:bg-white
+         hover:text-black hover:border-white border-2 border-[#A020F0] transition-colors duration-300'>Get Started</button>
         </Link>
       </div>
     </div>

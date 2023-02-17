@@ -31,15 +31,17 @@ const Footer = () => {
 
       <hr className="text-white mx-0" />
       <footer className="bg-black pb-5">
-        <div className="max-w-screen-xl px-4 pt-8 mx-auto sm:px-6 lg:px-8 text-white">
-          <div className="flex flex-col items-center justify-center md:flex-row md:justify-start">
-            <img className="rounded-full" alt="UQ logo" src={UQ} width="50" height="50" />
-            <p className="mt-4 text-sm text-center md:text-left md:pl-4 md:mt-0 text-gray-400">
-              University Of Queensland (2022), School of Information Technology and Electrical Engineering
-            </p>
-          </div>
-        </div>
-      </footer>
+  <div className="max-w-screen-xl px-4 pt-8 mx-auto sm:px-6 lg:px-8 text-white">
+    <div className="flex flex-col justify-center items-center md:flex-row">
+      <img className="rounded-full" alt="UQ logo" src={UQ} width="50" height="50" />
+      <p className="mt-4 text-sm text-center md:text-left md:pl-4 md:mt-0 text-gray-400">
+        University Of Queensland (2022), School of Information Technology and Electrical Engineering
+      </p>
+    </div>
+  </div>
+</footer>
+
+
     </>
   );
 };
