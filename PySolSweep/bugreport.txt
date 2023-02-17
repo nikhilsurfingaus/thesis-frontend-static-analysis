@@ -1,0 +1,230 @@
+
+Integer Overflow/Underflow Bug Detected at Line: 5
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 9
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 10
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 11
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 22
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 23
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 24
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 31
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 40
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 41
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 47
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 49
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 52
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 65
+Solution: Use SafeMath for uint library to minimise vulnerbaility
+Risk: High
+Confidence: High
+
+Loop Integer Overflow/Underflow Bug Detected at Line: 24
+Solution: Careful when using uint within loop as could cause infinite loop check no
+constant true condition can evaluate
+Risk: High
+Confidence: Medium
+
+Loop Integer Overflow/Underflow Bug Detected at Line: 31
+Solution: Careful when using uint within loop as could cause infinite loop check no
+constant true condition can evaluate
+Risk: High
+Confidence: Medium
+
+Loop Integer Overflow/Underflow Bug Detected at Line: 41
+Solution: Careful when using uint within loop as could cause infinite loop check no
+constant true condition can evaluate
+Risk: High
+Confidence: Medium
+
+Loop Integer Overflow/Underflow Bug Detected at Line: 52
+Solution: Careful when using uint within loop as could cause infinite loop check no
+constant true condition can evaluate
+Risk: High
+Confidence: Medium
+
+Loop Integer Overflow/Underflow Bug Detected at Line: 65
+Solution: Careful when using uint within loop as could cause infinite loop check no
+constant true condition can evaluate
+Risk: High
+Confidence: Medium
+
+Integer Overflow/Underflow Bug Detected at Line: 11
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 24
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 26
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 30
+Solution: Use SafeMath library operation .div to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 31
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 41
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 43
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 47
+Solution: Use SafeMath library operation .div to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 52
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 63
+Solution: Use SafeMath library operation .mul to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 65
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 67
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Integer Overflow/Underflow Bug Detected at Line: 71
+Solution: Use SafeMath library operation .add to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Unhadled Exceptions Bug Detected at Line: 77
+Solution: Use transfer function instead of send operation as send doesn't capture
+transaction fails to minimise vulnerbaility
+Risk: Medium
+Confidence: High
+
+Untrusted Function Bug Detected at Line: 17
+Solution: Unknown trust, label function either trusted/untrusted
+Risk: Medium
+Confidence: High
+
+Untrusted Function Bug Detected at Line: 21
+Solution: Unknown trust, label function either trusted/untrusted
+Risk: Medium
+Confidence: High
+
+Untrusted Function Bug Detected at Line: 39
+Solution: Unknown trust, label function either trusted/untrusted
+Risk: Medium
+Confidence: High
+
+Untrusted Function Bug Detected at Line: 62
+Solution: Unknown trust, label function either trusted/untrusted
+Risk: Medium
+Confidence: High
+
+Untrusted Function Bug Detected at Line: 76
+Solution: Unknown trust, label function either trusted/untrusted
+Risk: Medium
+Confidence: High
+
+For/While Loop Function Call Bug Detected at Line: 34
+Solution: Avoid Function Call In For/While Loop possible DoS vulnerbaility
+Risk: Medium
+Confidence: High
+
+Block Gas Limit Bug Detected at Line: 24
+Solution: Avoid loop of unknown size that could grow and cause DoS vulnerability
+Risk: Medium
+Confidence: High
+
+Block Gas Limit Bug Detected at Line: 31
+Solution: Avoid loop of unknown size that could grow and cause DoS vulnerability
+Risk: Medium
+Confidence: High
+
+Block Gas Limit Bug Detected at Line: 41
+Solution: Avoid loop of unknown size that could grow and cause DoS vulnerability
+Risk: Medium
+Confidence: High
+
+Block Gas Limit Bug Detected at Line: 52
+Solution: Avoid loop of unknown size that could grow and cause DoS vulnerability
+Risk: Medium
+Confidence: High
+
+Total Bug Points: 678
+Overflow/Underflow Bugs Detected: 32
+
+Syntax Bugs Detected: 6
+
+DAO Bugs Detected: 5
+
+Smart Contract Score: 65%

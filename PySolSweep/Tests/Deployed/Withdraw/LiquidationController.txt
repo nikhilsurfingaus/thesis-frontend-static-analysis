@@ -1,0 +1,33 @@
+pragma solidity 0.8.1;
+
+contract LiquidationController is Ownable {
+    bdToken public bdUSD;
+    bdToken public bdETH;
+    IWETH9 constant WETH = IWETH9(payable(0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2));
+    IERC20 constant DAI = IERC20(0x6B175474E89094C44Da98b954EedeAC495271d0F);
+    IERC20 public bUSD;
+    ISwapRouter public swapRouter; // UniV3 Router
+    ICurve public curvePool; //bUSD-3Pool
+
+    address public Treasury = 0x3dFc49e5112005179Da613BdE5973229082dAc35;
+
+    mapping(address => uint24) poolFee;
+
+    using SafeERC20 for IERC20;
+
+    constructor(address _curvePool, address _bdUSD, address _bdETH, address _bUSD, address _bdUSDC, address _swapRouter){
+        curvePool = ICurve(_curvePool);
+        bdUSD = bdToken(_bdUSD);
+        bdETH = bdToken(_bdETH);
+        bUSD = IERC20(_bUSD);
+        swapRouter = ISwapRouter(_swapRouter);
+
+        poolFee[_bdUSDC] = 500; //USDC-DAI
+        poolFee[_bdETH] = 3000; //Eth-DAI
+    }
+    function sendValue(address payable recipient, uint256 amount) internal {
+        require(address(this).balance >= amount, "Address: insufficient balance");
+        (bool success, ) = recipient.call{value: amount}("");
+        require(success, "Address: unable to send value, recipient may have reverted");
+    }
+}

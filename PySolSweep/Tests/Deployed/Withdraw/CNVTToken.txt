@@ -1,0 +1,13 @@
+pragma solidity ^0.4.24;
+
+contract CNVTToken is StandardToken {
+    mapping (address => uint256) internal _balances;
+    mapping (address => mapping (address => uint256)) internal _allowed;
+
+    function approve(address _spender, uint256 _value) public {
+        require((_value == 0) || (_allowed[msg.sender][_spender] == 0));
+        _allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+}

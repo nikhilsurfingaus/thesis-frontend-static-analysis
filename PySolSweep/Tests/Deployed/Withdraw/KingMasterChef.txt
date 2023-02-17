@@ -1,0 +1,25 @@
+pragma solidity 0.6.12;
+
+
+contract kingmasterchef {
+    using SafeMath for uint256;
+    using Address for address;
+
+    function withdraw(uint256 _pid, uint256 _amount) public {
+        PoolInfo storage pool = poolInfo[_pid];
+        UserInfo storage user = userInfo[_pid][msg.sender];
+        require(user.amount >= _amount, "withdraw: not good");
+        updatePool(_pid);
+
+        uint256 pendingSushiReward = user.amount.mul(pool.accSushiPerShare).div(1e12).sub(user.rewardDebtSushi);
+        uint256 pendingKingReward = user.amount.mul(pool.accKingPerShare).div(1e12).sub(user.rewardDebtKing);
+        safeSushiTransfer(msg.sender, pendingSushiReward);
+        safeKingTransfer(msg.sender, pendingKingReward);
+
+        user.amount = user.amount.sub(_amount);
+        user.rewardDebtSushi = user.amount.mul(pool.accSushiPerShare).div(1e12);
+        user.rewardDebtKing = user.amount.mul(pool.accKingPerShare).div(1e12);
+        pool.lpToken.safeTransfer(address(msg.sender), _amount);
+        emit Withdraw(msg.sender, _pid, _amount);
+    }
+}

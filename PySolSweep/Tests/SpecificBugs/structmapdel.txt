@@ -1,0 +1,36 @@
+pragma solidity ^0.4.24;
+
+contract A {
+
+    struct BalancesStruct {
+        address owner;
+        mapping(address => uint) balances;
+    }
+    
+    mapping(address => BalancesStruct) public stackBalance;
+    mapping(uint => BalancesStruct) public stockBalance;
+
+    function remove() internal{
+         delete stackBalance[msg.sender];
+         delete stockBalance[msg.sender];
+    }
+
+    
+    struct Campaign {
+        address beneficiary;
+        uint fundingGoal;
+        uint numFunders;
+        uint amount;
+        mapping (uint => Funder) funders;
+    }
+  
+    uint numCampaigns;
+    mapping (uint => Campaign) campaigns;
+    mapping (uint => Campaign) private campaignions;
+
+
+    function rem() public{
+        delete campaigns[msg.sender];
+   }
+
+}

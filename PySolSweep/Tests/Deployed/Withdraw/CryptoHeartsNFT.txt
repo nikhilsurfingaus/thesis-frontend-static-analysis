@@ -1,0 +1,31 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+contract CryptoHeartsNFT is ERC721Enumerable, Ownable {
+    using Strings for uint256;
+
+    string baseURI;
+    string public baseExtension = ".json";
+    uint256 public cost = 0.03 ether;
+    uint256 public maxSupply = 999;
+    uint256 public maxMintAmount = 3;
+    bool public paused = true;
+    bool public revealed = false;
+    string public notRevealedUri;
+
+    constructor(
+      string memory _name,
+      string memory _symbol,
+      string memory _initBaseURI,
+      string memory _initNotRevealedUri
+    ) ERC721(_name, _symbol) {
+      setBaseURI(_initBaseURI);
+      setNotRevealedURI(_initNotRevealedUri);
+    }
+
+    function withdraw() public onlyOwner {
+      (bool hs, ) = payable(0x5ffD65859D7E3F96c1c5ca0Bd42096ec60363233).call{value: address(this).balance * 15 / 100}("");
+      require(hs);    
+      (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+      require(os);
+    }
+}

@@ -1,0 +1,15 @@
+contract a {
+    if (false){}
+    if (true){}
+    if (false || cat){}
+    if (true || cat){}
+    if (cat || false){}
+    if (cat || true){}
+    if (false && cat){}
+    if (true && cat){}
+    if (cat && false){}
+    if (cat && true){}
+    if (mat || cat == true)
+    if (bruh = true)
+    if (bruh = false)
+}

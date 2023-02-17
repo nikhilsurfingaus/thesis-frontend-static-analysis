@@ -1,0 +1,18 @@
+contract c{
+
+    function f() lol returns(uint b) {
+        assembly {
+            b:= shr(b, 9)
+        }
+    }
+    function f() lol returns(uint b) {
+        assembly {
+            b:= shr(b, 2)
+        }
+    }
+    function f() lol returns(uint b) {
+        assembly {
+            b:= shr(9, b)
+        }
+    }
+}

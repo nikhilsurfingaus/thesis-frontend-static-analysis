@@ -1,0 +1,39 @@
+pragma solidity 0.8.7;
+
+contract SuperlativeMagicLaboratory is ERC1155Burnable, Ownable, ReentrancyGuard {
+
+    using Strings for uint256;
+    SUPERLATIVEAPES public slapeContract;
+
+    string public baseURI;
+    string public baseExtension = ".json";
+
+
+    uint256 constant public MagicVialMaxReserve = 3333;
+    uint256 constant public MagicHerbsMaxReserve = 1106;
+    uint256 constant public MagicPotsMaxReserve = 5;
+
+    uint256 public vialMinted;
+    uint256 public herbsMinted;
+    uint256 public potsMinted;
+
+
+    bool public WhitelistOpen = false;
+
+    mapping (address => uint256) public totalPresaleMinted;
+
+    mapping (address => bool) public whitelistClaim;
+
+    constructor(string memory _initBaseURI, address slapesAddress) ERC1155(_initBaseURI) {
+        setBaseURI(_initBaseURI);
+        slapeContract = SUPERLATIVEAPES(slapesAddress);
+
+        vialMinted++;
+        _mint(msg.sender, 1, 1, ""); 
+    }
+
+    function _withdraw(address payable address_, uint256 amount_) internal {
+        (bool success, ) = payable(address_).call{value: amount_}("");
+        require(success, "Transfer failed");
+    }
+}

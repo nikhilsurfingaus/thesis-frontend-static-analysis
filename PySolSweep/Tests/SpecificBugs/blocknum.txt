@@ -1,0 +1,19 @@
+pragma solidity 0.4.24;
+contract BlockNumberDependencySample {
+    address king;
+    uint king_at;
+
+    function claim() {
+        if (msg.sender == king && block.number - king_at >= 30) {
+            /* Use block.numer to compare before sending ethereum */
+            msg.sender.send(address(this).balance);
+        }
+    }
+
+    function buy() payable {
+        if (msg.value >= 0.1 ether) {
+            king = msg.sender;
+            king_at = block.number;
+        }
+    }
+}

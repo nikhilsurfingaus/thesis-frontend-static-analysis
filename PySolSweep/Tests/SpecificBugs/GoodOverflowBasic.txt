@@ -1,0 +1,41 @@
+contract Counter {
+    
+    using SafeMath for uint256;
+    
+    uint256 counter = 0;
+    
+     function incrment() public {
+        counter = counter.add(1);
+    }
+    
+    function decrement() public {
+        counter = counter.sub(1);
+    }
+    
+}
+contract Counter {
+    
+    using SafeMath for uint256 counter = 0;
+        
+     function incrment() public {
+        counter = counter.add(1);
+    }
+    
+    function decrement() public {
+        counter = counter.sub(1);
+    }
+    
+}
+contract Counter {
+        
+    uint256 counter = 0;
+    
+     function incrment() public {
+        counter = counter.add(1);
+    }
+    
+    function decrement() public {
+        counter = counter.sub(1);
+    }
+    
+}

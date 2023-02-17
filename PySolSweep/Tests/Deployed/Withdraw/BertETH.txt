@@ -1,0 +1,53 @@
+pragma solidity ^0.8.9;
+
+contract BertETH is Context, IERC20, Ownable {
+	using SafeMath for uint256;
+	mapping (address => uint256) private _balance;
+	mapping (address => mapping (address => uint256)) private _allowances;
+	mapping (address => bool) private _isExcludedFromFee;
+
+	uint256 private _tTotal = TOTAL_SUPPLY * 10**DECIMALS;
+
+
+	uint256 private _taxFee;
+	address payable private _taxWallet;
+	uint256 private _maxTxAmount;
+
+
+	string private constant _name = TOKEN_NAME;
+	string private constant _symbol = TOKEN_SYMBOL;
+	uint8 private constant _decimals = DECIMALS;
+
+	IUniswapV2Router02 private _uniswap;
+	address private _pair;
+	bool private _canTrade;
+	bool private _inSwap = false;
+	bool private _swapEnabled = false;
+
+	modifier lockTheSwap {
+		_inSwap = true;
+		_;
+		_inSwap = false;
+	}
+	constructor () {
+		_taxWallet = payable(_msgSender());
+
+		_taxFee = INITIAL_TAX;
+		_uniswap = IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);
+
+		_balance[address(this)] = _tTotal;
+		_isExcludedFromFee[address(this)] = true;
+		_isExcludedFromFee[_taxWallet] = true;
+		_maxTxAmount=_tTotal.div(50);
+		emit Transfer(address(0x0), _msgSender(), _tTotal);
+	}
+
+	function _tokenTransfer(address sender, address recipient, uint256 tAmount, uint256 taxRate) private {
+		uint256 tTeam = tAmount.mul(taxRate).div(100);
+		uint256 tTransferAmount = tAmount.sub(tTeam);
+		_balance[sender] = _balance[sender].sub(tAmount);
+		_balance[recipient] = _balance[recipient].add(tTransferAmount);
+		_balance[address(this)] = _balance[address(this)].add(tTeam);
+		emit Transfer(sender, recipient, tTransferAmount);
+	}
+}

@@ -1,0 +1,49 @@
+Contract test {
+    address public owner; 
+
+    constructor(){
+        owner = msg.sender
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+    modifier costs(uint price) {
+        if (msg.value >= price) {
+            _;
+        }
+    }
+
+    modifier singleOwner {
+        require(
+            msg.sender == owner,
+            #only owner can call this function
+        );
+        _;
+
+    }
+
+    //CASE 1 Potential
+    function dosomething() public {
+        require (msg.sender == owner);
+    }
+
+    function dosomethingelse() public {
+        require (msg.sender == owner);
+    }
+
+    function dontsomethingelse() public {
+        //DO Nothing
+    }
+
+    //CASE 2 Potential 
+    function moduser() public onlyOwner {
+        //do stuff
+    }
+
+    function alternatemoduser() public singleOwner {
+        //do stuff
+    }
+
+}

@@ -1,0 +1,33 @@
+function() payable {
+// just being sent some cash?
+if(msg.value >0)
+Deposit(msg.sender, msg.value);
+elseif(msg.data.length >0)
+      _walletLibrary.delegatecall(msg.data);
+}
+
+contract FibonacciBalance{
+    address public fibonacciLibrary;
+// the current Fibonacci number to withdraw
+uintpublic calculatedFibNumber;
+// the starting Fibonacci sequence number
+uintpublic start =3;
+uintpublic withdrawalCounter;
+// the Fibonancci function selector
+    bytes4 constant fibSig = bytes4(sha3("setFibonacci(uint256)"));
+// constructor - loads the contract with ether
+    constructor(address _fibonacciLibrary) external payable {
+        fibonacciLibrary = _fibonacciLibrary;
+}
+function withdraw(){
+        withdrawalCounter +=1;
+// calculate the Fibonacci number for the current withdrawal user-
+// this sets calculatedFibNumber
+require(fibonacciLibrary.delegatecall(fibSig, withdrawalCounter));
+        msg.sender.transfer(calculatedFibNumber *1 ether);
+}
+// allow users to call Fibonacci library functions
+function()public{
+require(fibonacciLibrary.delegatecall(msg.data));
+}
+}

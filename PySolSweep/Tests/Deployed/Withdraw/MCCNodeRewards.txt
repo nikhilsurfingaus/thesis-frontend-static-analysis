@@ -1,0 +1,31 @@
+pragma solidity ^0.8.4;
+
+
+contract MCCNodeRewards is Ownable {
+    using SafeMath for uint256;
+
+    IMCCNode node;
+
+    struct Share {
+      uint256 totalRealised;
+      uint256 lastClaim;
+    }
+
+    mapping(uint256 => Share) public shares;
+
+    uint256 public totalDistributed; // to be shown in UI
+
+    uint256 public rewardFrequencySeconds = 60 * 60 * 24; // 1 day
+
+    constructor(address _node) {
+      node = IMCCNode(_node);
+    }
+
+    function withdrawTokens(address _tokenAddy, uint256 _amount) external onlyOwner {
+      IERC20 _token = IERC20(_tokenAddy);
+      _amount = _amount > 0 ? _amount : _token.balanceOf(address(this));
+      require(_amount > 0, 'make sure there is a balance available to withdraw');
+      _token.transfer(owner(), _amount);
+    }
+
+}

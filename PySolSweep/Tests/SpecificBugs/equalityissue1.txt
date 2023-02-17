@@ -1,0 +1,28 @@
+contract Crowdsale{
+    function fund_reached() public returns(bool){
+        return this.balance == 100 ether;
+    }
+}
+
+contract Crowdsale{
+    function fund_reached() public returns(bool){
+        return this.balance >= 100 ether;
+    }
+}
+
+ function lock(Term term, bytes calldata edgewareAddr, bool isValidator)
+     external
+     payable
+     didStart
+     didNotEnd
+ {
+     uint256 eth = msg.value;
+     address owner = msg.sender;
+     uint256 unlockTime = unlockTimeForTerm(term);
+     // Create ETH lock contract
+     Lock lockAddr = (new Lock).value(eth)(owner, unlockTime);
+     // ensure lock contract has all ETH, or fail
+     assert(address(lockAddr).balance == msg.value); // BUG
+     emit Locked(owner, eth, lockAddr, term, edgewareAddr, isValidator, now);
+ }
+

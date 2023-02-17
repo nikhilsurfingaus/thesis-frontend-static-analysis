@@ -1,0 +1,39 @@
+pragma solidity 0.8.11;
+pragma abicoder v2;
+
+contract MultiEnglishAuction is AccessControl {
+
+    enum AuctionStatus { NOT_STARTED, IN_PROGRESS, ENDED }
+
+    struct AuctionDetails {
+        address nftContract;
+        address payable seller;
+        address payable highestBidder;
+        uint tokenId;
+        uint startingBid;
+        uint highestBid;
+        uint startTime;
+        uint endTime;
+        string auctionName;
+        AuctionStatus auctionStatus;
+        bool handbrakeOn;
+    }
+
+
+    AuctionDetails[] public auctions;
+    mapping(uint => mapping(address => uint)) public bids;
+
+
+    constructor() {
+        _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
+    }
+
+    function withdraw(uint _auctionId) public {
+        require(msg.sender != auctions[_auctionId].highestBidder, "Highest bidder can't withdraw");
+        require(bids[_auctionId][msg.sender] > 0, "No pending bids");
+        uint bal = bids[_auctionId][msg.sender];
+        bids[_auctionId][msg.sender] = 0;
+        payable(msg.sender).transfer(bal);
+        emit Withdraw(_auctionId, msg.sender, bal);
+    }
+}

@@ -1,0 +1,12 @@
+function transfer(address _to, uint256 _value) {
+    require(balanceOf[msg.sender] >= _value);
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+}
+
+
+function transfer(address _to, uint256 _value) {
+    require(balanceOf[msg.sender] >= _value && balanceOf[_to] + _value >= balanceOf[_to]);
+    balanceOf[msg.sender] -= _value;
+    balanceOf[_to] += _value;
+}

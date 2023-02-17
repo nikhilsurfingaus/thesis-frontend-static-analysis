@@ -1,0 +1,34 @@
+contract Test {
+
+uint a = 0;
+
+    function x() public {
+
+        //BAD
+        for (int x; x = 0; x <= 5; x++) {
+            //NA
+        }
+
+        //BAD
+        while (int y; y = 0; y >= 5; y++) {
+            //NA
+        }
+
+        //BAD
+        for (uint m; m = 0; m <= 5; m++) {
+            //NA
+        }
+
+        //BAD
+        while (uint z; z = 0; z >= 5; z++) {
+            //NA
+        }
+
+        //GOOD
+        for (int m; m = 0; m < 5; m++) {
+            //NA
+        }
+
+    }
+
+}

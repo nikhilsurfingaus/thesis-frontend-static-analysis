@@ -1,0 +1,72 @@
+pragma solidity ^0.4.24;
+
+contract A {
+    uint sData;
+    address owner;
+    uint mData = 12;
+    uint cData = 14;
+    string public name = "con A";
+    uint public ConOwn;
+
+    constructor(){
+        sData = 12;
+        ConOwn = call.value;
+    }
+
+    modifier isOwner(){
+        require(owner == msg.sender);
+        _;
+    }
+    function x() {
+        //Do Nothing
+    }
+    
+
+}
+
+//BAD
+contract B is A{
+    string public name = "Contract B";
+    uint mData = 15;
+    uint cData = 17;
+    ConOwn = call.value;
+    address owner;
+
+
+    function withdraw() isOwner() external{
+        msg.sender.transfer(this.balance);
+    }
+
+}
+
+
+//BAD
+contract C is A{
+
+    constructor() {
+        address owner = msg.sender;
+    }
+    
+    function withdraw() isOwner() external{
+        msg.sender.transfer(this.balance);
+    }
+
+}
+
+//GOOD
+contract D is A{
+    uint bro = 0;
+    uint lol;
+
+    constructor() {
+        name = "Contract C";
+        lol = 69;
+        string public name = "Contract C";
+        uint mData = 19;
+        uint cData = 21;
+    }
+
+    function withdraw() isOwner() external{
+        msg.sender.transfer(this.balance);
+    }
+}

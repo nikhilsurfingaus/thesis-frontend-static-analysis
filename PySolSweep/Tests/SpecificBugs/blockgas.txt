@@ -1,0 +1,16 @@
+pragma solidity 0.4.24;
+
+contract DistributeTokens {
+    address public owner;
+    uint[] investorTokens;
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function distribute(address[] investors) public {
+        require(msg.sender == owner);
+        for (uint i = 0; i < investors.length; i++) {
+            investorTokens.push(msg.value * 5);
+        }
+    }
+}

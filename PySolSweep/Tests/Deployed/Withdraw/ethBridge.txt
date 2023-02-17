@@ -1,0 +1,38 @@
+pragma solidity ^0.8.0;
+
+
+contract ethBridge is Multiownable {
+    FUTURECOIN private token;
+
+    uint256 public minimumCommissionGas;
+    uint256 public minimumExchangeOnBridge;
+
+    mapping(address => uint256) public tokensSent;
+    mapping(address => uint256) public tokensRecieved;
+    mapping(address => uint256) public tokensRecievedButNotSent;
+
+    mapping(address => uint256) public howManyWritesToRefund;
+ 
+    address public tokenAddress; 
+
+    constructor (address payable _token, uint256 _minimumCommissionGas, uint256 _minimumExchangeOnBridge) {
+        tokenAddress = _token;
+        token = FUTURECOIN(_token);
+        minimumCommissionGas = _minimumCommissionGas;
+        minimumExchangeOnBridge = _minimumExchangeOnBridge;
+    }
+ 
+    bool transferStatus;
+    
+    bool avoidReentrancy = false;
+
+    function withdrawEther(uint256 amount, address payable reciever) public onlyAllOwners {
+        require(amount > 0,"Amount of tokens should be more then 0");
+        require(reciever != address(0), "Zero account");
+        require(address(this).balance >= amount,"Not enough balance");
+
+        reciever.transfer(amount);
+    }
+
+
+}

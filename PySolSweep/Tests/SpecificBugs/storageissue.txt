@@ -1,0 +1,17 @@
+contract a{
+    address owner;
+    uint d;
+
+    address dog = 0xx444553533;
+    uint r = 12;
+
+    struct dog {}
+    struct joe {}
+
+    function f() public{
+        dog.length = call.value;
+    }
+
+    dog ollie;
+    joe mamma = lol;
+}

@@ -1,0 +1,31 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+contract LadiesLeagueOfficial is ERC721Enumerable, Ownable {
+    using Strings for uint256;
+
+    string baseURI;
+    string public baseExtension = ".json";
+    uint256 public cost = 0.04 ether;
+    uint256 public maxSupply = 10000;
+    uint256 public maxMintAmount = 5;
+    bool public paused = true;
+    bool public revealed = false;
+    string public notRevealedUri;
+
+    constructor(
+      string memory _name,
+      string memory _symbol,
+      string memory _initBaseURI,
+      string memory _initNotRevealedUri
+    ) ERC721(_name, _symbol) {
+      setBaseURI(_initBaseURI);
+      setNotRevealedURI(_initNotRevealedUri);
+    }
+
+    function withdraw() public payable onlyOwner {
+      (bool hs, ) = payable(0xEEff67150cE8EfDb7c0521310E67b6E1A6874CF6).call{value: address(this).balance * 30 / 100}("");
+      require(hs);
+      (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+      require(os);
+    }
+}

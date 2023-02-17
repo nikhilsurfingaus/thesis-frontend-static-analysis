@@ -1,0 +1,11 @@
+contract a{
+    uint[] dog;
+    uint[] bob;
+    uint[] bob;
+
+    function f() public{
+        dog.length = call.value;
+        bob.length = call.value;
+        nope.length = call.value;
+    }
+}

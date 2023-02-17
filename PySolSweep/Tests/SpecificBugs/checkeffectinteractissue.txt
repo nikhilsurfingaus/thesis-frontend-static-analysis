@@ -1,0 +1,42 @@
+//No Check Effect Interact
+function x public{
+    if blah {
+        sah
+    }
+}
+//Correct Check Effect Interact
+function m public{
+    require(something)
+    balance = new.call.value
+    transfer.funds()
+}
+//Missing Check
+function m public{
+    balance = new.call.value
+    transfer.funds()
+}
+//Out of order Check
+function m public{
+    balance = new.call.value
+    transfer.funds()
+    require(something)
+}
+function m public{
+    require(something)
+    balance = new.call.value
+    send.funds()
+}
+function m public{
+    require(something)
+    balance = new.call.value
+    call.value.funds()
+}
+function m public{
+    balance = new.call.value
+    call.value.funds()
+}
+function m public{
+    assert(something)
+    balance = new.call.value
+    call.value.funds()
+}

@@ -1,0 +1,51 @@
+pragma solidity 0.8.11;
+
+
+contract DoodleFriends is ERC721Enumerable, Ownable, ERC721Burnable, ERC721Pausable {
+    using SafeMath for uint256;
+
+
+    bool public SALE_OPEN = false;
+    uint256 private constant MAX_SUPPLY = 3353; // 3353 Doodle Friends
+    uint256 private constant MAX_MINT_LIMITED = 3; // 3 batch mint max
+    uint256 private constant MAX_MINT_UNLIMITED = 3353; // unlimited batch mint
+
+    uint256 private constant PRICE_WHITELIST_ONE = 0.065 ether; // Stage One for Whitelist
+    uint256 private constant PRICE_WHITELIST_TWO = 0.075 ether; // Stage Two for Whitelist
+    uint256 private constant PRICE_PUBLIC = 0.085 ether; // Public Sale Price
+
+    uint256 private _price;
+    uint256 private _maxMint;
+
+    mapping(uint256 => bool) private _isOccupiedId;
+    uint256[] private _occupiedList;
+
+    string private baseTokenURI;
+
+    address private devWallet = payable(0x18236675fE58640dc2e9dDFfC478eC2EEea6Ca52); // Developer Wallet Address
+    address private fundWallet = payable(0x269D13DaF86aec35e9bD12684B027CbA597360f1); // Owner Fund Wallet Address
+
+    event DoodleFriendSummoned(address to, uint256 indexed id);
+
+    modifier saleIsOpen {
+        if (_msgSender() != owner()) {
+            require(SALE_OPEN == true, "SALES: Please wait a big longer before buying Doodle Friends ;)");
+        }
+        require(_totalSupply() <= MAX_SUPPLY, "SALES: Sale end");
+
+        if (_msgSender() != owner()) {
+            require(!paused(), "PAUSABLE: Paused");
+        }
+        _;
+    }
+
+    constructor (string memory baseURI) ERC721("Doodle Friends", "DoodleFriends") {
+        setBaseURI(baseURI);
+    }
+
+    function _widthdraw(address _address, uint256 _amount) private {
+        (bool success, ) = _address.call{value: _amount}("");
+        require(success, "WITHDRAW: Transfer failed.");
+    }
+
+}

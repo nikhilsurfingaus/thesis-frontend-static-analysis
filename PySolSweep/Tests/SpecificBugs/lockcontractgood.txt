@@ -1,0 +1,8 @@
+bool internal locked; //only contract can change this variable
+modifier blockRentrancy {
+    require(!locked, "Contract is locked");
+    locked = true;
+     _;
+     locked = false; //set locked = false after completion of      
+                     // function execution
+}

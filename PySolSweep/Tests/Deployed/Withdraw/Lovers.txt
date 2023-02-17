@@ -1,0 +1,59 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+
+contract Lovers is ERC721, Ownable {
+    using Strings for uint256;
+    using Counters for Counters.Counter;
+
+    Counters.Counter private supply;
+
+    string public uriPrefix = "ipfs://QmQ5c6ZqzhzPjAR9QpBrXi3eihVMDEk6Cj7wcbncZ2x79x/";
+    string public uriSuffix = ".json";
+    string public hiddenMetadataUri;
+    
+    uint256 public presaleCost = 0.01 ether;
+    uint256 public publicsaleCost = 0.014 ether;
+
+    uint256 public maxSupply = 3000;
+
+    uint256 public nftPerAddressLimit = 16;
+    uint256 public maxMintAmountPerTx = 8;
+
+    bool public paused = false;
+    bool public revealed = false;
+
+    bool public presale = true;
+
+    bool public onlyWhitelisted = true;
+    address[] public whitelistedAddresses;
+
+    mapping(address => uint256) public addressMintedBalance;
+
+    constructor() ERC721("Lovers", "LOVERS") {
+        setHiddenMetadataUri("ipfs://QmebTzc9G4ShohX2JxzeJa5AJQZCWGZEZCnNvWAzjdtpAf/");
+    }
+
+    modifier mintCompliance(uint256 _mintAmount) {
+        if (msg.sender != owner()) {
+            if(presale == true) {
+                if(onlyWhitelisted == true) {
+                    require(isWhitelisted(msg.sender), "User is not whitelisted");
+                }
+            }
+
+            uint256 ownerMintedCount = addressMintedBalance[msg.sender];
+            require(ownerMintedCount + _mintAmount <= nftPerAddressLimit, "Max NFT per address exceeded");
+
+            require(_mintAmount > 0 && _mintAmount <= maxMintAmountPerTx, "Invalid mint amount!");
+        }
+
+
+        require(supply.current() + _mintAmount <= maxSupply, "Max supply exceeded!");
+        _;
+    }
+
+    function withdraw() public {
+        (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+        require(os);
+    }
+}

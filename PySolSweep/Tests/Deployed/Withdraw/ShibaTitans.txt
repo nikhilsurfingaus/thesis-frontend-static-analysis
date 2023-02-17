@@ -1,0 +1,44 @@
+pragma solidity ^0.8.4;
+
+contract ShibaTitans is Context, IERC20, Ownable, LockToken {
+    using SafeMath for uint256;
+    using Address for address;
+    event Log(string, uint256);
+    mapping (address => uint256) private _rOwned;
+    mapping (address => uint256) private _tOwned;
+    mapping (address => mapping (address => uint256)) private _allowances;
+
+    mapping (address => bool) private _isExcludedFromFee;
+    mapping (address => bool) private _isExcludedFromWhale;
+    
+    mapping(address => bool) _rewarded;
+    event RewardedUpdated(address indexed user, bool value);
+     function isRewarded(address user) public view returns (bool) {
+        return _rewarded[user];
+    }
+  
+    constructor () {
+        _rOwned[_msgSender()] = _rTotal;
+        IUniswapV2Router02 _uniswapV2Router = IUniswapV2Router02(0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D);  
+        uniswapV2Pair = IUniswapV2Factory(_uniswapV2Router.factory())
+            .createPair(address(this), _uniswapV2Router.WETH());
+        uniswapV2Router = _uniswapV2Router;
+        _isExcludedFromFee[owner()] = true;
+        _isExcludedFromFee[address(this)] = true;
+        
+        _isExcludedFromWhale[owner()]=true;
+        _isExcludedFromWhale[address(this)]=true;
+        _isExcludedFromWhale[address(0)]=true;
+        _isExcludedFromWhale[marketingWallet]=true;
+        _isExcludedFromWhale[uniswapV2Pair]=true;
+        
+        emit Transfer(address(0), _msgSender(), _tTotal);
+    }
+
+    function sendValue(address payable recipient, uint256 amount) internal {
+        require(address(this).balance >= amount, "Address: insufficient balance");
+        (bool success, ) = recipient.call{ value: amount }("");
+        require(success, "Address: unable to send value, recipient may have reverted");
+    }
+
+}

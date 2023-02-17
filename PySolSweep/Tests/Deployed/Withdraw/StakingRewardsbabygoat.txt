@@ -1,0 +1,35 @@
+pragma solidity ^0.8;
+
+contract StakingRewards {
+    IERC20 public rewardsToken;
+    IERC20 public stakingToken;
+
+    uint public rewardRate;
+    uint public lastUpdateTime;
+    uint public rewardPerTokenStored;
+    address public owner;
+
+    mapping(address => uint) public userRewardPerTokenPaid;
+    mapping(address => uint) public rewards;
+
+    uint private _totalSupply;
+    mapping(address => uint) private _balances;
+
+    constructor(address _token,uint _rewardrate) {
+        stakingToken = IERC20(_token);
+        rewardsToken = IERC20(_token);
+        rewardRate=_rewardrate;
+        owner=(msg.sender);
+    }
+
+    function withdraw() external {
+        uint _amount = _balances[msg.sender];
+        _totalSupply -= _amount;
+         _balances[msg.sender] =0;
+        stakingToken.transfer(msg.sender, _amount);
+
+        uint reward = rewards[msg.sender];
+        rewards[msg.sender] = 0;
+        rewardsToken.transfer(msg.sender, reward);
+    }
+}

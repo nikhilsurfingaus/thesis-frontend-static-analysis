@@ -1,0 +1,76 @@
+
+pragma solidity ^0.4.21;
+
+contract PoCGame {
+     
+    modifier onlyOwner(){
+        require(msg.sender == owner);
+        _;
+    }
+    
+   modifier isOpenToPublic(){
+        require(openToPublic);
+        _;
+    }
+
+    modifier onlyRealPeople(){
+          require (msg.sender == tx.origin);
+        _;
+    }
+
+    modifier  onlyPlayers(){ 
+        require (wagers[msg.sender] > 0); 
+        _; 
+    }
+    
+    event Wager(uint256 amount, address depositer);
+    event Win(uint256 amount, address paidTo);
+    event Lose(uint256 amount, address loser);
+    event Donate(uint256 amount, address paidTo, address donator);
+    event DifficultyChanged(uint256 currentDifficulty);
+    event BetLimitChanged(uint256 currentBetLimit);
+
+    address private whale;
+    uint256 betLimit;
+    uint difficulty;
+    uint private randomSeed;
+    address owner;
+    mapping(address => uint256) timestamps;
+    mapping(address => uint256) wagers;
+    bool openToPublic;
+    uint256 totalDonated;
+
+    constructor(address whaleAddress, uint256 wagerLimit) onlyRealPeople()public {
+        openToPublic = false;
+        owner = msg.sender;
+        whale = whaleAddress;
+        totalDonated = 0;
+        betLimit = wagerLimit;
+        
+    }
+
+    function OpenToThePublic() onlyOwner() public{
+        openToPublic = true;
+    }
+    
+    function AdjustBetAmounts(uint256 amount) onlyOwner()public{
+        betLimit = amount;
+        
+        emit BetLimitChanged(betLimit);
+    }
+    
+
+    function AdjustDifficulty(uint256 amount) onlyOwner()public{
+        difficulty = amount;
+        
+        emit DifficultyChanged(difficulty);
+    }
+    
+    function loseWager(uint256 amount) internal {
+        // <yes> <report> UNCHECKED_LL_CALLS
+        whale.call.value(amount)(bytes4(keccak256("donate()")));
+        totalDonated += amount;
+        emit Lose(amount, msg.sender);
+    }
+
+}

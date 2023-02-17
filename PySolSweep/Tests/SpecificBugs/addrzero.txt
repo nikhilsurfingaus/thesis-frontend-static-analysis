@@ -1,0 +1,36 @@
+contract A {
+    uint x;
+    address owner;
+    constructor() public {
+        x = 0;
+    }
+    modifier onlyAdmin {
+        if (msg.sender != owner) throw;
+        _;
+    }
+    function A() public {
+        x = 1;
+        s = 3;
+    }
+    //BAD
+    function updateOwn(address newOwn) onlyAdmin external {
+        owner = newOwner
+    }
+    function updateOwn2(address newOwn2) public {
+        owner = newOwner2
+    }
+    function updateOwn3(address newOwn2) private {
+        owner = newOwner3
+    }
+
+    //GOOD here checks require not zero
+    function gooodOwn(address owner) onlyAdmin {
+        require(owner != 0x0, "ERC20: transfer to the zero address");
+    }
+    function gooodOwn(address owner2) onlyAdmin {
+        require(owner2 != address(0x0), "Check");
+    }
+    function gooodOwn(address ownvar) onlyAdmin {
+        require(ownvar != address(0), "Check 2");
+    }
+}

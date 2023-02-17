@@ -1,0 +1,47 @@
+pragma solidity >=0.8.3;
+
+contract ApolloDAO is Context {
+
+    Token public immutable apolloToken;
+    struct newDAONomination {
+    uint256 timeOfNomination;
+    address nominator;
+    uint256 votesFor;
+    uint256 votesAgainst;
+    bool votingClosed;
+    }
+
+    struct DAOVotes {
+        uint256 voteCount;
+        bool votedFor;
+    }
+
+    mapping (address => newDAONomination) private _newDAONominations;
+    mapping (address => mapping (address => DAOVotes)) private _lockedVotes;
+
+    uint256 public constant daoVotingDuration = 259200;
+    uint256 public constant minimumDAOBalance = 14000000000 * 10**9;
+    uint256 public totalLockedVotes;
+    uint256 public activeDaoNominations;
+
+    address public approvedNewDAO = address(0);
+    uint256 public constant daoUpdateDelay = 86400;
+    uint256 public daoApprovedTime;
+    uint256 public constant daoVoteBurnPercentage = 1;
+
+    address public immutable daoAdministrator;
+
+
+    constructor (address tokenAddress, address administrator) {
+        apolloToken = Token(tokenAddress);
+        daoAdministrator = administrator;
+    }
+
+    function reflectBalance(uint256 amountToReflect) external {
+        require(apolloToken.artistDAO() != address(this), "This function cannot be called while this contract is the DAO");
+        if(amountToReflect == 0){
+            amountToReflect = apolloToken.balanceOf(address(this));
+        }
+        apolloToken.reflect(amountToReflect);
+    }
+}

@@ -1,0 +1,14 @@
+contract a {
+
+    function x() public {
+        x
+    }
+
+    function x() public {
+        selfdestruct(call.msg)
+    }
+
+    function x() public {
+        selfdestruct(addr)
+    }
+}

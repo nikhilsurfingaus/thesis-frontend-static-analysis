@@ -1,0 +1,36 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+contract StickFrens is ERC721, Ownable {
+    using Strings for uint256;
+    using Counters for Counters.Counter;
+
+    Counters.Counter private supply;
+
+    string public uriPrefix = "";
+    string public uriSuffix = ".json";
+    string public hiddenMetadataUri;
+
+    uint256 public cost = 0.08 ether;
+    uint256 public maxSupply = 10000;
+    uint256 public maxMintAmountPerTx = 5;
+
+    bool public paused = true;
+    bool public revealed = false;
+
+    constructor() ERC721("Stick Frens", "STFR") {
+      setHiddenMetadataUri("ipfs://QmbtQ22DwN4XZZAdCibEdyW5N1P2AQRfkxhFXxNmMvC9Tf/Hidden.json");
+    }
+
+    modifier mintCompliance(uint256 _mintAmount) {
+      require(_mintAmount > 0 && _mintAmount <= maxMintAmountPerTx, "Invalid mint amount!");
+      require(supply.current() + _mintAmount <= maxSupply, "Max supply exceeded!");
+      _;
+    }
+
+    function withdraw() public onlyOwner {
+      require(hs);
+      (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+      require(os);
+    }
+
+}

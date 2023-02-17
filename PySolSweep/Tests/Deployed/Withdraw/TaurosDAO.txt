@@ -1,0 +1,24 @@
+pragma solidity ^0.8.0;
+
+contract TaurosDAO is ERC721Enumerable, Ownable {
+    using SafeMath for uint256;
+    using Counters for Counters.Counter;
+    
+    Counters.Counter private _tokenIds;
+    
+    uint public constant MAX_SUPPLY = 7110;
+    uint public constant PRICE = 0.05 ether;
+    uint public constant MAX_PER_MINT = 10;
+    string public baseTokenURI;
+    
+    constructor(string memory baseURI) ERC721("TaurosDAO", "TAUROS") {
+        setBaseURI(baseURI);
+    }
+    
+    function withdraw() public payable onlyOwner {
+        uint balance = address(this).balance;
+        require(balance > 0, "No ether left to withdraw");
+        (bool success, ) = (msg.sender).call{value: balance}("");
+        require(success, "Transfer failed.");
+    }
+}

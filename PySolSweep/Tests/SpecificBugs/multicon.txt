@@ -1,0 +1,20 @@
+contract A {
+    uint x;
+    address owner;
+    uint256 z = 4;
+    uint y;
+    uint s;
+    constructor() public {
+        x = 0;
+        y = 3;
+        s = 4;
+    }
+    function A() public {
+        x = 1;
+        s = 3;
+    }
+    
+    function test() public returns(uint) {
+        return x;
+    }
+}

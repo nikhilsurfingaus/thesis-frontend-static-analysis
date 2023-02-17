@@ -1,0 +1,33 @@
+function withdraw(uint _amount) public {
+        balances[msg.sender] -= _amount;
+        (bool sent, ) = msg.sender.call{value: _amount}("");
+        require(sent, "Failed to send funds");
+}
+
+function withdraw(uint _amount) public {
+        require (balances[msg.sender] >= _amount, "Insufficient funds");
+       //Now, update to state variable balances is happening before        
+       // the call, the attacker wouldnt be able to withdraw
+       // funds more than he/she deposited. Subsequent calls into 
+       //this function will fail as the depositor will not have 
+        // funds.
+        balances[msg.sender] -= _amount;
+        (bool sent, ) = msg.sender.call{value: _amount}("");
+        require(sent, "Failed to send funds");
+}
+
+function withdraw(uint _amount) public {
+        balances[msg.sender] -= _amount;
+        (bool sent, ) = msg.sender.call{value: _amount}("");
+        require(sent, "Failed to send funds");
+}    
+    
+function withdraw(uint _amount) public {
+    require (balances[msg.sender] >= _amount, "Insufficient funds");
+        
+    (bool sent, ) = msg.sender.call{value: _amount}("");
+    require(sent, "Failed to send funds");
+        
+    balances[msg.sender] -= _amount;
+}
+    

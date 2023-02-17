@@ -1,0 +1,43 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.7.6;
+
+contract ReceiveEther {
+    function getBalance() public view returns (uint) {
+        return address(this).balance;
+    }
+}
+
+contract SendEther {
+    function sendViaTransfer(address payable _to) public payable {
+        // This function is no longer recommended for sending Ether.
+        _to.transfer(msg.value);
+    }
+
+    function sendViaSend(address payable _to) public payable {
+        // Send returns a boolean value indicating success or failure.
+        // This function is not recommended for sending Ether.
+        bool sent = _to.send(msg.value);
+        require(sent, "Failed to send Ether");
+    }
+
+    function sendViaCall(address payable _to) public payable {
+        // Call returns a boolean value indicating success or failure.
+        // This is the current recommended method to use.
+        (bool sent, bytes memory data) = _to.call{value: msg.value}("");
+        require(sent, "Failed to send Ether");
+    }
+}
+
+pragma solidity ^0.4.0;
+
+// THIS CONTRACT CONTAINS A BUG - DO NOT USE
+contract Fund {
+    /// Mapping of ether shares of the contract.
+    mapping(address => uint) shares;
+    /// Withdraw your share.
+    function withdraw() public {
+        if (msg.sender.call.value(shares[msg.sender])())
+            shares[msg.sender] = 0;
+    }
+}
+

@@ -1,0 +1,46 @@
+pragma solidity ^0.4.24;
+
+contract Bug {
+    uint owner;
+    address send;
+    uint xy = 2;
+
+    constructor(uint _data) public {
+        x = _data;   
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner);
+        _;
+    }
+
+    function alternate_sensitive_function() public {
+        address owner = msg.sender;
+        // Case 1 BAD
+        require(owner == msg.sender);
+    }
+    function alternate_sensitive_function() public {
+        uint owner = msg.sender;
+        // Case 1 BAD
+        require(owner == msg.sender);
+    }
+    function alternate_sensitive_function() public {
+        address own = msg.sender;
+        // Case 1 GOOD
+        require(own == msg.sender);
+    }
+
+    function sensitive_function(address owner) public onlyOwner{
+        // Case 2 BAD
+        require(owner == msg.sender);
+    }
+    function sensitive_function(address send) public {
+        // Case 2 BAD
+        require(send == msg.sender);
+    }
+    function sensitive_function(uint own) public {
+        // GOOD
+        require(own == msg.sender);
+    }
+
+}

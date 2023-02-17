@@ -1,0 +1,30 @@
+pragma solidity ^0.8.0;
+
+contract TheLonelyGnomes is Ownable, ERC721A, ReentrancyGuard {
+
+    uint256 public constant freeSaleLimit = 1000;
+    uint256 public constant maxPerAddressDuringMint = 30;
+
+    struct SaleConfig {
+      uint64 publicPrice;
+      bool paused;
+    }
+
+    SaleConfig public saleConfig;
+
+    constructor() ERC721A("The Lonely Gnomes", "GNOMES", 10, 6000) {
+      saleConfig.publicPrice = 0.015 ether;
+      saleConfig.paused = true;
+    }
+
+    modifier callerIsUser() {
+      require(tx.origin == msg.sender, "The caller is another contract");
+      _;
+    }  
+
+    function withdrawMoney() external onlyOwner {
+      (bool success, ) = msg.sender.call{value: address(this).balance}("");
+      require(success, "Transfer failed.");
+    }
+
+}

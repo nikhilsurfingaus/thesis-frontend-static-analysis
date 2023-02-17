@@ -1,0 +1,73 @@
+pragma solidity ^0.4.0;
+
+contract SmallIssues {
+    function TxUserWallet() public {
+        owner = msg.sender;
+    }
+
+    function transferTo(address dest, uint amount) public {
+        require(tx.origin == owner);
+        dest.transfer(amount);
+    }
+
+    function multicall(bytes[] calldata data) external returns (bytes[] memory results) {
+        for (uint i = 0; i < data.length; i++) {
+            results[i] = Address.functionDelegateCall(address(this), data[i]);
+        }
+        return results;
+    }
+
+    using SafeMath for uint256;
+    
+    uint256 counter = 0;
+    
+    function incrment() public {
+        counter = counter + 1;
+    }
+    
+    function decrement() public {
+        counter = counter - 1;
+    }
+
+    function withdrawWinnings() {
+        // Winner if the last 8 hex characters of the address are 0. 
+        require(uint32(msg.sender) == 0);
+        _sendWinnings();
+    }
+     
+     function _sendWinnings() {
+        msg.sender.transfer(this.balance);
+    }
+
+    function _sendWinnings() private {
+        msg.sender.transfer(this.balance);
+    }
+
+    function _sendWinnings() public {
+        msg.sender.transfer(this.balance);
+    }
+
+    function withdraw() external {
+        uint256 amount = balances[msg.sender];
+        require(msg.sender.call.value(amount)());
+        balances[msg.sender] = 0;
+    }
+
+    function untrustedWithdraw() public {
+        uint256 amount = balances[msg.sender];
+        require(msg.sender.call.value(amount)());
+        balances[msg.sender] = 0;
+    }
+
+    function untrustedSettleBalance() external {
+        untrustedWithdraw();
+    }
+
+    function fund_reached() public returns(bool){
+        return this.balance >= 100 ether;
+    }
+
+    function fund_reached() public returns(bool){
+        return this.balance == 100 ether;
+    }
+}

@@ -1,0 +1,55 @@
+pragma solidity ^0.8.11;
+
+contract KrazykarensNFT is ERC721, Ownable, Pausable, ReentrancyGuard {
+    using Strings for uint256;
+    using SafeMath for uint256;
+    using SafeMath for uint8;
+
+    uint256 public constant MAX_SUPPLY = 6666;
+    uint256 public constant MINT_PRICE = 0.04 ether;
+    uint256 public constant MINT_PRICE_PUBLIC = 0.08 ether;
+    uint256 public constant MAX_MINT_PER_TX = 10;
+    uint256 public constant MAX_MINT_PER_WL = 2;
+    uint256 public constant GIVEAWAY_SUPPLY = 50;
+    uint256 public totalSupply = 0;
+    bool public saleStarted = false;
+    bool public preSaleStarted = false;
+    bool public revealed = false;
+
+    string public baseExtension = ".json";
+    string public baseURI;
+    string public notRevealedURI;
+
+    bytes32 private _merkleRoot;
+    address[] private _royaltyAddresses = [
+        0xb20F2a4601aED75B886CC5B84E28a0D65a7Bfd48, 
+        0xf3Dd09D30249Ca3FB34251aBC144ad4409d79597  
+    ];
+
+    mapping(address => uint256) private _royaltyShares;
+    mapping(address => uint256) balanceOfAddress;
+
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        string memory _initBaseURI,
+        string memory _initNotRevealedURI
+    ) ERC721(_name, _symbol) {
+        setBaseURI(_initBaseURI);
+        setNotRevealedURI(_initNotRevealedURI);
+
+        _royaltyShares[_royaltyAddresses[0]] = 1;  
+        _royaltyShares[_royaltyAddresses[1]] = 99; 
+    }    
+
+    function withdraw() external onlyOwner {
+        require(address(this).balance > 0, "EMPTY_BALANCE");
+        uint256 balance = address(this).balance;
+
+        for (uint256 i = 0; i < _royaltyAddresses.length; i++) {
+            payable(_royaltyAddresses[i]).transfer(
+                balance.div(100).mul(_royaltyShares[_royaltyAddresses[i]])
+            );
+        }
+    }
+}

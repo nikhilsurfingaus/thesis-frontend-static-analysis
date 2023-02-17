@@ -1,0 +1,103 @@
+pragma solidity 0.5.17;
+
+contract MultiRewards is ReentrancyGuard, Pausable {
+    using SafeMath for uint256;
+    using SafeERC20 for IERC20;
+
+    struct Reward {
+        address rewardsDistributor;
+        uint256 rewardsDuration;
+        uint256 periodFinish;
+        uint256 rewardRate;
+        uint256 lastUpdateTime;
+        uint256 rewardPerTokenStored;
+    }
+    IERC20 public stakingToken;
+    mapping(address => Reward) public rewardData;
+    address[] public rewardTokens;
+
+    struct RewardRate {
+        uint256 startingTime;      // inclusive of this time
+	    uint256 ratePerToken;	   // reward per second for each token from startingTime to next (exclusive).  last one applicable to lastTimeRewardApplicable
+    }
+    // reward token -> RewardRate[]
+    mapping(address => RewardRate[]) public rewardRatePerToken;
+
+    // user -> reward token -> amount
+    mapping(address => mapping(address => uint256)) public userRewardPerTokenPaid;
+    mapping(address => mapping(address => uint256)) public rewards;
+
+    uint256 private _totalSupply;
+    mapping(address => uint256) private _balances;
+
+    // handling lockup for individual stake
+    uint256 public lockDuration;
+    // user -> reward token -> amount
+    mapping(address => mapping(address => uint256)) public claimedRewards;
+
+    struct Stake {
+        uint256 stakingMaturity;
+	    uint256 remainingBalance;	
+    }    
+    // user -> stakes [stake index]
+    mapping(address => Stake[]) public userStakes;
+
+    struct StakeBalance {
+        uint256 startingTime;    // inclusive of this time
+	    uint256 sBalance;	     // balance from startingTime to next (exclusive of next)    
+    }
+    // user -> StakeBalance[]
+    mapping(address => StakeBalance[]) public userStakeBalance;
+
+
+    constructor(
+        address _owner,
+        address _stakingToken,
+        uint256 _lockDuration
+    ) public Owned(_owner) {
+        stakingToken = IERC20(_stakingToken);
+        lockDuration = _lockDuration;
+    }
+
+    function withdraw(uint256 amount) public nonReentrant notPaused updateReward(msg.sender) {
+        require(amount > 0, "Cannot withdraw 0");
+	    uint256 askedAmount = Math.min(amount, _balances[msg.sender]);
+	    uint256 actualAmount = 0;
+	    uint256 thisTest = lastTimeRewardApplicable(rewardTokens[0]);
+        for (uint i; i < userStakes[msg.sender].length; i++) {
+            uint256 outAmount = unlockedStakeAtTime(msg.sender, thisTest, i);
+            if (outAmount > 0) {
+                outAmount = Math.min(outAmount, askedAmount);
+	   	        userStakes[msg.sender][i].remainingBalance = userStakes[msg.sender][i].remainingBalance.sub(outAmount);	   
+ 	   	        askedAmount = askedAmount.sub(outAmount);
+		        actualAmount = actualAmount.add(outAmount);
+            }
+            if (askedAmount == 0)
+        	    break;
+	    }
+        require(actualAmount > 0 && actualAmount <= amount && actualAmount <= _balances[msg.sender], "No unlocked stake");    
+        _totalSupply = _totalSupply.sub(actualAmount);
+        _balances[msg.sender] = _balances[msg.sender].sub(actualAmount);
+
+        {  
+            uint256 prev = userStakeBalance[msg.sender].length;
+            if (prev > 0 && block.timestamp == userStakeBalance[msg.sender][prev-1].startingTime)
+                userStakeBalance[msg.sender][prev-1].sBalance = _balances[msg.sender];  // in case the user can withdraw more than once within the same block
+            else
+                userStakeBalance[msg.sender].push(StakeBalance(block.timestamp, _balances[msg.sender]));
+        }
+        for (uint i = 0; i < rewardTokens.length; i++) {
+            uint256 prev = rewardRatePerToken[rewardTokens[i]].length;
+            uint256 reward_rate = 0;
+            if (_totalSupply > 0 && block.timestamp < rewardData[rewardTokens[i]].periodFinish)
+                reward_rate = rewardData[rewardTokens[i]].rewardRate.mul(1e18).div(_totalSupply);
+            if (prev > 0 && block.timestamp == rewardRatePerToken[rewardTokens[i]][prev-1].startingTime)  // in case same block stake or withdraw
+                rewardRatePerToken[rewardTokens[i]][prev-1].ratePerToken = reward_rate; 
+            else          
+                rewardRatePerToken[rewardTokens[i]].push(RewardRate(block.timestamp, reward_rate ) );   
+        } 
+
+        stakingToken.safeTransfer(msg.sender, actualAmount);
+        emit Withdrawn(msg.sender, actualAmount);
+    }
+}

@@ -1,0 +1,79 @@
+pragma solidity 0.8.7;
+
+contract ChicknCoin {
+
+    uint256 public tokenPrice = 0.0 ether;
+
+    string public tokenBaseURI = "ipfs://QmUQp1gup2GU9WLsNCMzgTM2sDBUgBNtREcvz8GcTbrhqa/";
+
+    uint256 public constant PRESOLD_TOKENS_AMOUNT = 14;
+    uint256 public constant TOTAL_TOKENS = 842;
+    uint256 public nextTokenId = PRESOLD_TOKENS_AMOUNT + 1;
+
+    constructor() ERC721("Chick'nCoin", "CHICKN") {
+        
+    }
+    
+    function setTokenPrice(uint256 val) external onlyOwner {
+      tokenPrice = val;
+    }
+
+    function distribute(uint256 [] calldata ids) external {
+        uint256 perTransfer = msg.value;
+        uint256 numberOfTransfers = 0;
+        for(uint256 i = 0; i < ids.length; i++) { 
+            if(_exists(ids[i])) {
+               numberOfTransfers ++;
+            }
+        }
+        require(numberOfTransfers != 0, "Nobody owns the tokens");
+        perTransfer = perTransfer / numberOfTransfers;
+        for(uint256 i = 0; i < ids.length; i++) { 
+            if(_exists(ids[i])) {
+                address payable ownerOfToken = payable(ownerOf(ids[i]));
+                ownerOfToken.transfer(perTransfer);
+            }
+        }
+    }
+
+    function getDistributionData(uint256 [] calldata ids, uint256 value) public {
+        uint256 numberOfTransfers = 0;
+        for(uint256 i = 0; i < ids.length; i++) { 
+            if(_exists(ids[i])) {
+               numberOfTransfers ++;
+            }
+        }
+
+        uint256 perTransfer = numberOfTransfers == 0 ? 0 : (value / numberOfTransfers);
+
+        uint256[] memory result = new uint256[](numberOfTransfers);
+        address[] memory resultAddresses = new address[](numberOfTransfers);
+        
+        for(uint256 i = 0; i < ids.length; i++){ 
+            if(_exists(ids[i])) {
+                address ownerOfToken = ownerOf(ids[i]);
+                result[i] = ids[i];
+                resultAddresses[i] = ownerOfToken;
+            }
+        }
+        return (result, resultAddresses, perTransfer);
+    }
+
+    function mint(uint256 amount) external {
+        require(msg.value >= tokenPrice * amount, "Incorrect ETH");
+
+        for(uint256 i = 0; i < amount; i++) {
+            while (_exists(nextTokenId)) {
+                nextTokenId++;
+            }
+            require(nextTokenId <= TOTAL_TOKENS, "No more tokens available to mint");
+            _safeMint(msg.sender, nextTokenId);
+            nextTokenId++;
+        }
+    }
+
+    
+    function withdraw() external onlyOwner {
+        require(payable(msg.sender).send(address(this).balance));
+    }
+}

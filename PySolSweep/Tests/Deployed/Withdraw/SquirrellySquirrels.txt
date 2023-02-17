@@ -1,0 +1,62 @@
+
+pragma solidity ^0.8.0;
+
+contract SquirrellySquirrels  {
+    using SafeMath for uint256;
+
+    uint256 public constant NFT_1_PRICE = 0.16 ether;
+    uint256 public constant NFT_3_PRICE = 0.39 ether;
+    uint256 public constant NFT_5_PRICE = 0.45 ether;
+    uint256 public constant MAX_NFT_PURCHASE_PRESALE = 5;
+    uint256 public constant MAX_MINT_PER_TX = 5;
+    uint256 public constant MAX_SUPPLY = 10000;
+
+    bool public saleIsActive = false;
+    bool public presaleIsActive = false;
+
+    bool public revealed = false;
+
+    uint256 public reserve = 300;
+    uint256 public startingIndex;
+
+    mapping(address => uint256) public allowListNumClaimed;
+    bytes32 public allowListMerkleRoot;
+    bytes32 public startingIndexRequestId;
+
+    string public uriPrefix = "";
+    string public uriSuffix = ".json";
+    string public hiddenMetadataUri = "";
+    string public provenance;
+
+    string private _baseURIExtended;
+
+    modifier mintCompliance(uint256 _numberOfTokens) {
+      require(
+        _numberOfTokens > 0 &&
+          _numberOfTokens != 2 &&
+          _numberOfTokens != 4 &&
+          _numberOfTokens <= MAX_MINT_PER_TX,
+        "Invalid mint amount"
+      );
+
+      require(
+        (_numberOfTokens == 1 && msg.value == NFT_1_PRICE) ||
+          (_numberOfTokens == 3 && msg.value == NFT_3_PRICE) ||
+          (_numberOfTokens == 5 && msg.value == NFT_5_PRICE),
+        "Sent ether value is incorrect"
+      );
+
+      _;
+    }
+
+    constructor(address _vrfCoordinator, address _link, address _owner) {
+      transferOwnership(_owner);
+    }
+
+
+    function withdraw() external onlyOwner {
+      (bool os, ) = payable(owner()).call{ value: address(this).balance }("");
+      require(os, "withdraw: transfer failed");
+    }
+
+}

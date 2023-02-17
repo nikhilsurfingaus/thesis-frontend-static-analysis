@@ -1,0 +1,34 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+
+contract GoldenMoments is ERC721Enumerable, Ownable {
+    using Strings for uint256;
+
+    string public baseURI;
+    string public baseExtension = ".json";
+    string public notRevealedUri;
+    uint256 public cost = .0555 ether;
+    uint256 public maxSupply = 1111;
+    uint256 public maxMintAmount = 5;
+    uint256 public nftPerAddressLimit = 5;
+    bool public paused = false;
+    bool public revealed = false;
+    bool public onlyWhitelisted = true;
+    address[] public whitelistedAddresses;
+    mapping(address => uint256) public addressMintedBalance;
+
+    constructor(
+      string memory _name,
+      string memory _symbol,
+      string memory _initBaseURI,
+      string memory _initNotRevealedUri
+    ) ERC721(_name, _symbol) {
+      setBaseURI(_initBaseURI);
+      setNotRevealedURI(_initNotRevealedUri);
+    }
+
+    function withdraw() public payable onlyOwner {
+      (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+      require(os);
+    }
+}

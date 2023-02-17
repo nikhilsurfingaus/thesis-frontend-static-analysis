@@ -1,0 +1,17 @@
+pragma solidity 0.5.0;
+
+
+contract ChecksEffectsInteractions {
+
+    mapping(address => uint) balances;
+
+    function deposit() public payable {
+        balances[msg.sender] = msg.value;
+    }
+
+    function withdraw(uint amount) public {
+        msg.sender.transfer(amount);
+        require(balances[msg.sender] >= amount);
+        balances[msg.sender] -= amount;
+    }
+}

@@ -1,0 +1,20 @@
+pragma solidity ^0.8.7;
+
+contract ChicknCoin is ERC721Enumerable, Ownable {
+    using Strings for uint256;
+
+    uint256 public tokenPrice = 0.0 ether;
+
+    string public tokenBaseURI = "ipfs://QmUQp1gup2GU9WLsNCMzgTM2sDBUgBNtREcvz8GcTbrhqa/";
+
+    uint256 public constant PRESOLD_TOKENS_AMOUNT = 14;
+    uint256 public constant TOTAL_TOKENS = 842;
+    uint256 public nextTokenId = PRESOLD_TOKENS_AMOUNT + 1;
+
+    constructor() ERC721("Chick'nCoin", "CHICKN") {
+    }
+    
+    function withdraw() external onlyOwner {
+        require(payable(msg.sender).send(address(this).balance));
+    }
+}

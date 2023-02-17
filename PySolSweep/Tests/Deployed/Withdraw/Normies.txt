@@ -1,0 +1,64 @@
+pragma solidity ^0.8.0;
+
+contract Normies is IERC721, Ownable, Functional {
+
+    using Address for address;
+    
+    // Token name
+    string private _name;
+
+    // Token symbol
+    string private _symbol;
+    
+    // URI Root Location for Json Files
+    string private _baseURI;
+
+    // Mapping from token ID to owner address
+    mapping(uint256 => address) private _owners;
+
+    // Mapping owner address to token count
+    mapping(address => uint256) private _balances;
+
+    // Mapping from token ID to approved address
+    mapping(uint256 => address) private _tokenApprovals;
+
+    // Mapping from owner to operator approvals
+    mapping(address => mapping(address => bool)) private _operatorApprovals;
+    
+    // Specific Functionality
+    bool public mintActive;
+    bool public whitelistActive;
+    bool private _hideTokens;  //for URI redirects
+    uint256 public price;
+    uint256 public totalTokens;
+    uint256 public numberMinted;
+    uint256 public maxPerTxn;
+    uint256 public whiteListMax;
+    uint256 public WLprice;
+    
+    mapping(address => uint256) private _whitelist;
+
+    constructor() {
+        _name = "Paranormies";
+        _symbol = "NORMIE";
+        _baseURI = "https://paranormies.io/metadata/";
+        _hideTokens = true;
+        
+
+        totalTokens = 9700;
+        price = 69 * (10 ** 15); // Replace leading value with price in finney  0.069E
+        WLprice = 69 * (10 ** 15);
+        maxPerTxn = 20;
+        whiteListMax = 4;
+    }
+
+    
+    function withdraw() external onlyOwner {
+        uint256 Funds = address(this).balance;
+        bool success;
+        sendAmount = (Funds * 5) / 100;
+        (success, ) = Community.call{value: sendAmount}("");
+        require(success, "Transaction Unsuccessful");
+    }
+   
+}

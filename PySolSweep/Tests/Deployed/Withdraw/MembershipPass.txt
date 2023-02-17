@@ -1,0 +1,22 @@
+pragma solidity ^0.8.10;
+
+contract MembershipPass is ERC721Enumerable, Ownable {
+    using SafeMath for uint256;
+    uint256 public constant max_passes = 300;
+    uint256 private _mintLimit = 15;
+    uint256 private _price = 0; //0.5 ETH
+    uint256 private _publicSaleTime = 1642876500;
+    string private _uriPrefix;
+    string private _baseTokenURI;
+    mapping(address => uint256) private _walletMinted;
+
+    constructor(string memory baseURI) {
+        setBaseURI(baseURI);
+        _uriPrefix = "ipfs://"; //default to ipfs 
+
+    }
+
+    function withdrawAll() public payable onlyOwner {
+        require(payable(msg.sender).send(address(this).balance));
+    }
+}

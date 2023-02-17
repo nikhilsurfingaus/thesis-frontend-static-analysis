@@ -1,0 +1,36 @@
+pragma solidity ^0.8.0;
+
+contract BattleCatsArena is ERC721A, Ownable {
+  using Strings for uint256;
+  
+  string public baseURI;
+  string public baseExtension = ".json";
+  string public notRevealedUri;
+  
+  uint256 public cost = 0.065 ether;
+  uint256 public maxSupply = 10000;
+  uint256 public setMaxMintAmountPerTxn = 20; 
+  uint256 public maxMintAmountPerWallet = 10000; 
+  uint256 public totalPresaleTickets = 5000;
+  uint256 public reserve = 200;
+  uint256 public reserveMinted = 0;
+
+  bool public paused = true;
+  bool public revealed = false;
+  bool public startMainSale = false;
+  
+  mapping(address => bool) private _presaleList;
+  mapping(address => bool) private _giftFreeMint;
+  mapping(address => uint256) public _totalMintedPresale;
+  mapping(address => uint256) public _totalMintedMainsale;
+  
+  constructor() ERC721A("BattleCatsArena", "BCA", maxSupply, maxSupply) {
+    setBaseURI("ipfs://Qmebgy2SzpgUa9EskNwoFYSBUMbP7Nzx6sCyvfZrW8Tdsj/");
+    setNotRevealedURI("ipfs://QmSReC6aRvBKHvMBZosnnfxFwFE4hV8QWECxXYkq2Xet2x");
+  }
+ 
+  function withdraw() external onlyOwner {
+    (bool success, ) = payable(msg.sender).call{value: address(this).balance}("");
+    require(success);
+  }
+}

@@ -1,0 +1,6 @@
+contract A{
+    function f(uint n) public{
+        coins = (oldsupply / n) * interests; //BAD
+        coins = (oldsupply * n) / interests; //GOOD
+    }
+}

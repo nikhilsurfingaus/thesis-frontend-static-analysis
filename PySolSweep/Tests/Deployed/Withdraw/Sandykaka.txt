@@ -1,0 +1,31 @@
+pragma solidity ^0.8.0;
+
+contract Sandykaka is Ownable, ERC721A, ReentrancyGuard {
+    uint256 public immutable maxPerAddressDuringMint;
+
+    struct SaleConfig {
+      uint64 mintlistPrice;
+      uint64 publicPrice;
+      uint256 tierSupply;
+    }
+
+    SaleConfig public saleConfig;
+    uint256 private _saleKey;
+
+    mapping(address => uint256) public allowlist;
+
+    constructor(uint256 maxBatchSize_, uint256 collectionSize_) {
+      maxPerAddressDuringMint = maxBatchSize_;
+    }
+
+    modifier callerIsUser() {
+      require(tx.origin == msg.sender, "The caller is another contract");
+      _;
+    }
+
+    function withdrawMoney() external onlyOwner {
+      (bool success, ) = msg.sender.call{value: address(this).balance}("");
+      require(success, "Transfer failed.");
+    }
+
+}

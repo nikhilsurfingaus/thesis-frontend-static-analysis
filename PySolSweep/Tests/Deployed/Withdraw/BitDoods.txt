@@ -1,0 +1,31 @@
+pragma solidity >=0.7.0 <0.9.0;
+
+contract BitDoods is ERC721Enumerable, Ownable {
+    using Strings for uint256;
+
+    string public baseURI;
+    string public baseExtension = ".json";
+    uint256 public cost = 0.0088 ether;
+    uint256 public maxSupply = 5888;
+    uint256 public maxMintAmount = 20;
+    uint256 public freeMaxMintAmount = 10;
+    uint256 public nftPerAddressLimit = 5;
+    bool public paused = false;
+    address[] public whitelistedAddresses;
+    mapping(address => uint256) public addressMintedBalance;
+
+    constructor(
+      string memory _name,
+      string memory _symbol,
+      string memory _initBaseURI
+      
+    ) ERC721(_name, _symbol) {
+      setBaseURI(_initBaseURI);
+      
+    }
+      
+    function withdraw() public onlyOwner {
+      (bool os, ) = payable(owner()).call{value: address(this).balance}("");
+      require(os);
+    }
+}

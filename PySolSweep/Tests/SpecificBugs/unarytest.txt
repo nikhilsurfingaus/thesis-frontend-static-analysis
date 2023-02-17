@@ -1,0 +1,12 @@
+contract Bug{
+    uint public counter;
+
+    function increase() public returns(uint) {
+        counter=+1;
+        counter=-1;
+        counter=*1;
+        counter+=1;
+        counter-=1;
+        counter*=1;
+    }
+}
