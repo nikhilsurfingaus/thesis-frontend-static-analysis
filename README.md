@@ -1,16 +1,14 @@
 # PySolSweep Frontend Display <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/logo.png" width="40" >
-# Main Thesis Project Repo
-## [ThesisProject-Static-Analysis-Solidity-Smart-Contracts](https://github.com/nikhilsurfingaus/ThesisProject-Static-Analysis-Solidity-Smart-Contracts)
 # Frontend Display Demo
-# Website: [https://pysolsweep.io](https://pysolsweep.netlify.app/)
+## Website: [https://pysolsweep.io](https://pysolsweep.netlify.app/)
 ## Screenshots
 <p float="left">
-  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/1.jpg" height=300 width="500" />
-  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/2.jpg" height=300 width="500" />
-  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/3.jpg" height=300 width="500" />
-  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/4.jpg" height=300 width="500" />
-  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/5.jpg" height=300 width="500" />
-  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/6.jpg" height=300 width="500" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/1.jpg" height=200 width="400" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/2.jpg" height=200 width="400" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/3.jpg" height=200 width="400" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/4.jpg" height=200 width="400" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/5.jpg" height=200 width="400" />
+  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/6.jpg" height=200 width="400" />
   <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/mobile.jpg" height=600 width="380" />
 </p>
 
@@ -30,6 +28,8 @@ src="https://avatars.githubusercontent.com/u/59892387?v=4" alt="drawing" width="
 
 - **Solidity** is an object-oriented programming language created specifically by the Ethereum Network to write on the Ethereum Blockchain platform.
 
+# Main Thesis Project Repo
+## [ThesisProject-Static-Analysis-Solidity-Smart-Contracts](https://github.com/nikhilsurfingaus/ThesisProject-Static-Analysis-Solidity-Smart-Contracts)
 # Static Analysis Tool For Solidity Smart Contracts
 ## Intro
 PySolSweep is a Static Program Analysis tool, which evaluates the securiity safety of a Solidity based Smart Contract. This tool offers coverage accross
