@@ -31,6 +31,7 @@ src="https://avatars.githubusercontent.com/u/59892387?v=4" alt="drawing" width="
 # Main Thesis Project Repo
 ## [ThesisProject-Static-Analysis-Solidity-Smart-Contracts](https://github.com/nikhilsurfingaus/ThesisProject-Static-Analysis-Solidity-Smart-Contracts)
 # Static Analysis Tool For Solidity Smart Contracts
+
 ## Intro
 PySolSweep is a Static Program Analysis tool, which evaluates the securiity safety of a Solidity based Smart Contract. This tool offers coverage accross
 three classes of attacks from Overflow/Underflow, Syntax and DAO. A total of 35 major bugs and their variants are detcted by the Python based
