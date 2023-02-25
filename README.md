@@ -61,7 +61,7 @@ Python 3 can be installed using pip:
         $ brew install python3
         ```
     1. Make your the Brew executables `bin` directory is in your `PATH` variable.
-- Windows
+- WindowsOs
     1. Download Python from the [Windows Download](https://www.python.org/downloads/windows/) page.
     2. Run the installer.
         - Be sure to _check_ the box on to have Python added to your `PATH` if the installer offers such an option (it's normally off by default).
