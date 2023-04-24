@@ -1,4 +1,4 @@
-# PySolSweep Frontend Display Project <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/logo.png" width="40" >
+#  <img src="https://github.com/nikhilsurfingaus/thesis-frontend-static-analysis/blob/master/src/assets/logo.png" width="40" > PySolSweep Frontend Display Project
 # Frontend Display Demo
 ## Website Link: [https://pysolsweep.io](https://pysolsweep.netlify.app/)
 ## Screenshots
